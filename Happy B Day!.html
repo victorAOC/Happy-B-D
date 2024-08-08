@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Card</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, #FFDDC1, #FFABAB, #FFC3A0, #FF9A9E, #FEC3A6, #FBC2EB, #A18CD1);
+            background-size: 300% 300%;
+            animation: gradient 10s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .background {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            animation: appear 1s ease forwards;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 60px;
+            color: #FF6F61;
+            margin: 0;
+            animation: textGlow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from {
+                text-shadow: 0 0 10px #FF6F61;
+            }
+            to {
+                text-shadow: 0 0 20px #FF6F61;
+            }
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #FF6F61;
+            margin-top: -10px;
+        }
+
+        .message {
+            font-size: 18px;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        /* Glow effect */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #FF6F61;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        /* Fireworks */
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: radial-gradient(circle, white, rgba(255, 255, 255, 0));
+            opacity: 0;
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(20);
+                opacity: 0;
+            }
+        }
+
+        /* Confetti effect */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--confetti-color);
+            top: -10vh;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+            }
+        }
+
+        /* Balloon effect */
+        .balloon {
+            position: absolute;
+            bottom: -15vh;
+            width: 60px;
+            height: 80px;
+            background-color: var(--balloon-color);
+            border-radius: 50%;
+            animation: rise linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes rise {
+            to {
+                transform: translateY(-110vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="card">
+            <div class="content">
+                <h1>Happy Birthday</h1>
+                <h2>To You Favour</h2>
+                <p class="message">Wishing you a day filled with love, joy, and everything that makes you happy. You are an amazing person, and I am so grateful to have you in my life. May all your dreams come true! You shall continue to grow and succeed in all that you do in Jesus name. The lord shall be with you all the days of your life and no evil shall come your way. I wish you long life and prosperity. Happy birthday dear. Love you.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.background');
+
+            // Fireworks on touch/click
+            container.addEventListener('click', (event) => {
+                createFirework(event.clientX, event.clientY);
+            });
+
+            container.addEventListener('touchstart', (event) => {
+                const touch = event.touches[0];
+                createFirework(touch.clientX, touch.clientY);
+            });
+
+            function createFirework(x, y) {
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                firework.style.left = `${x}px`;
+                firework.style.top = `${y}px`;
+                container.appendChild(firework);
+
+                // Remove firework after animation
+                setTimeout(() => {
+                    firework.remove();
+                }, 1000);
+            }
+
+            // Confetti
+            const confettiCount = 100;
+            const confettiColors = ['#FFC3A0', '#FF9A9E', '#FEC3A6', '#FBC2EB', '#A18CD1'];
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Randomize position and style
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDuration = Math.random() * 3 + 5 + 's'; // Random duration between 5s and 8s
+                confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                
+                container.appendChild(confetti);
+            }
+
+            // Balloons
+            const balloonCount = 30;
+            const balloonColors = ['#FF6F61', '#FFDDC1', '#FFABAB', '#FFC3A0', '#FEC3A6'];
+
+            for (let i = 0; i < balloonCount; i++) {
+                const balloon = document.createElement('div');
+                balloon.classList.add('balloon');
+                
+                // Randomize position and style
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.animationDuration = Math.random() * 3 + 6 + 's'; // Random duration between 6s and 9s
+                balloon.style.backgroundColor = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+                
+                container.appendChild(balloon);
+            }
+        });
+    </script>
+</body>
+</html>
